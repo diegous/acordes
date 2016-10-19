@@ -11,6 +11,10 @@ defmodule AcordesTest do
     assert Transposer.call("re", 2) == "mi"
   end
 
+  test "'do' augmented 1 semitone becomes 'do#'" do
+    assert Transposer.call("do", 1) == "do#"  
+  end
+
 #   it "transposes all 12 mayor notes one tone higher" do
 #      transposer = ChordTransposer::Transposer.new(2)
 #      original_chords = ['Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'La', 'La#', 'Si']
