@@ -28,11 +28,11 @@ defmodule AcordesTest do
   end
 
   test "can return american notation" do
-    assert Transposer.call("La", 0, :american) == "A"
+    assert Transposer.call("La", 0, :anglo) == "A"
   end
 
   test "can transpose american notation" do
-    assert Transposer.call("A", 2) == "B"
+    assert Transposer.call("A", 2) == "Si"
   end
 
   test "can augment all 12 minor notes one tone" do
