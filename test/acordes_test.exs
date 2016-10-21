@@ -27,6 +27,18 @@ defmodule AcordesTest do
     assert expected_chords == Enum.map(original_chords, fn (note) -> Transposer.call(note, -2) end)
   end
 
+  test "only notes can be transposed. Anything else is not_a_note" do
+    assert Transposer.call("Not a note", 1) == :not_a_note
+  end
+
+  test "can return american notation" do
+    assert Transposer.call("La", 0, :american) == "A"
+  end
+
+  test "can transpose american notation" do
+    assert Transposer.call("A", 2) == "B"
+  end
+
   # test "can augment all 12 minor notes one tone" do
   #   original_chords = ["Dom", "Do#m", "Rem", "Re#m", "Mim", "Fam", "Fa#m", "Solm", "Sol#m", "Lam", "La#m", "Sim"]
   #   expected_chords = ["Rem", "Re#m", "Mim", "Fam", "Fa#m", "Solm", "Sol#m", "Lam", "La#m", "Sim", "Dom", "Do#m"]

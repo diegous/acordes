@@ -1,32 +1,44 @@
 defmodule Acordes.Transposer do
 
+  @notes    ["Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
+  @american ["C" , "C#" , "D" , "D#" , "E" , "F" , "F#" , "G"  , "G#"  , "A" , "A#" , "B"]
+
+  @notes_positions (Enum.with_index(@notes) ++ Enum.with_index(@american)) |> Enum.into(%{})
+
   def call(note, semitones) do
-    note
-    |> pos
-    |> augment(semitones)
-    |> get_note
+    if Enum.member?(@american, note) do
+      call(note, semitones, :american)
+    else
+      call(note, semitones, :latin)
+    end
   end
 
-  defp pos(  "Do"), do:  0
-  defp pos( "Do#"), do:  1
-  defp pos(  "Re"), do:  2
-  defp pos( "Re#"), do:  3
-  defp pos(  "Mi"), do:  4
-  defp pos(  "Fa"), do:  5
-  defp pos( "Fa#"), do:  6
-  defp pos( "Sol"), do:  7
-  defp pos("Sol#"), do:  8
-  defp pos(  "La"), do:  9
-  defp pos( "La#"), do: 10
-  defp pos(  "Si"), do: 11
+  def call(note, semitones, notation) do
+    if Enum.member?((@notes ++ @american), note) do
+      note
+      |> position
+      |> augment(semitones)
+      |> get_note(notation)
+    else
+      :not_a_note
+    end
+  end
+
+  defp position(note) do
+    @notes_positions |> Map.fetch!(note)
+  end
 
   defp augment(position, semitones) do
     rem (position + semitones), 12
   end
 
-  defp get_note(position) do
-    {:ok, note} = ["Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
-    |> Enum.fetch(position)
+  defp get_note(position, :latin) do    
+    {:ok, note} = @notes |> Enum.fetch(position)
+    note
+  end
+
+  defp get_note(position, :american) do    
+    {:ok, note} = @american |> Enum.fetch(position)
     note
   end
 
