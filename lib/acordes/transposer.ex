@@ -33,13 +33,11 @@ defmodule Acordes.Transposer do
   end
 
   defp get_note(position, :latin) do    
-    {:ok, note} = @notes |> Enum.fetch(position)
-    note
+    @notes |> Enum.fetch!(position)
   end
 
   defp get_note(position, :american) do    
-    {:ok, note} = @american |> Enum.fetch(position)
-    note
+    @american |> Enum.fetch!(position)
   end
 
 end
