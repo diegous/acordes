@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nicanor/acordes.svg?branch=master)](https://travis-ci.org/nicanor/acordes)
+
 # Acordes
 
 **TODO: Add description**
